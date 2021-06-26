@@ -24,9 +24,9 @@ with resource
 
 
 ### (2) Seq2Seq with Attention
-> Seq2Seq의 Encoder와 Decoder를 통해 학습을 할 때, 입력 Sequence의 길이가 길어지면 Deocder로 전달하는 Hidden & Cell state에서 병목현상이 일어날 수 밖에 없다. 또한 Gradient가 첫번째 Layer까지 도달하기 어려운 문제 (Long Term Dependency)를 해결하기 위해 Attention 구조를 사용
+> Seq2Seq의 Encoder와 Decoder를 통해 학습을 할 때, 입력 Sequence의 길이가 길어지면 Deocder로 전달하는 Hidden & Cell state에서 병목현상이 일어날 수 밖에 없다. 또한 Gradient가 첫번째 Layer까지 도달하기 어려운 문제 (Long Term Dependency)를 해결하고 입력으로 주어진 정보들과의 유사도를 계산해서 필요한 정보를 얻기위해 Attention 구조를 사용
  - Encoder & Decoder with LSTM + Attention Layer
- - Use all hidden states in Encoder for caculate simialarity with Deocder's each hidden state
+ - Use all hidden states in Encoder for caculate simialarity with Deocder's each hidden state (Dot Attention, Concat Attention)
  - Solve Long Term Dependency problem -> More shoter way for gradient to get in encoder
  - Neural Machine Translation
  - Teacher Forcing
