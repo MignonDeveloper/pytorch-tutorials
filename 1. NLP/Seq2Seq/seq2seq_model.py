@@ -11,7 +11,7 @@ from utils import translate_sentence, bleu, save_checkpoint, load_checkpoint
 from tqdm import tqdm
 
 spacy_ger = spacy.load("de_core_news_sm") # German Tokenizer   !python3 -m spacy download de_core_news_sm
-spacy_eng = spacy.load('en_core_web_sm') # English Tokenizer   !python3 -m spacy download en_core_web_sm
+spacy_eng = spacy.load("en_core_web_sm") # English Tokenizer   !python3 -m spacy download en_core_web_sm
 
 def toeknizer_eng(text):
     ''' English Tokenizer
