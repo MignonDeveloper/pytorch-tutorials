@@ -98,7 +98,7 @@ class Decoder(nn.Module):
         # embedded_input: (1, batch, embedding_size)
 
         outputs, (hidden, cell) = self.decoder(embedded_input, (hidden_state, cell_state))
-        # output: (1, batch, hidden_dim) / last hidden & cell state: (batch, hidden_dim)
+        # output: (1, batch, hidden_dim) / last hidden & cell state: (layers, batch, hidden_dim)
 
         predictions = self.fc(outputs)
         # predictions: (1, batch, output_size)
@@ -174,7 +174,7 @@ train_iterator, valid_iterator, test_iterator = BucketIterator.splits(
     (train_data, validation_data, test_data),
     batch_size=batch_size,
     sort_within_batch=True,
-    sort_key=lambda x: len(x.src), # prioritize to have examples that are similar lenght in batch -> want to minimize padding
+    sort_key=lambda x: len(x.src), # prioritize to have examples that are similar lenght in batch -> want to minimize padding -> use less RNN loop
     device=device) 
 
 encoder_net = Encoder(input_size=input_size_encoder,
