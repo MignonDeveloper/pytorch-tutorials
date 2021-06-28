@@ -31,3 +31,18 @@ with resource
  - Neural Machine Translation
  - Teacher Forcing
 ![Seq2Seq with Attention](./docs/seq2seqwithAttention.png)
+
+
+
+### (3) Transformer
+
+>Self Attention 구조를 통해 오로지 Attention Block으로만 처리해서 Long Term Dependency 문제를 해결하고 입력값(query가 기준 -> key와 비교)들 사이에 관계를 파악한다.
+
+- Encoder & Decoder with Multi-Head Attention Block
+- Positional Encoding (with `nn.Embedding`)
+- Tri-Mask for target source to prevent cheating in DECODER
+- Make padding value -inf in energy so it has 0 attention score before getting attention
+- Neural Machine Translation
+
+![Transformer](./docs/transformer.png)
+
