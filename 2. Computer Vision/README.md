@@ -2,7 +2,10 @@
 
 ## 1. Object Detection
 
-### (1) Intersection over Union
+### (1) Metrics
+
+#### Intersection over Union
+
 > 모델이 Bounding Box를 얼마나 정확하게 판별했는지를 평가하기 위한 Metric
  - Origin of coordinate is on top-left
  - Intersection 
@@ -15,12 +18,13 @@
 
 
 
-### (2) Seq2Seq with Attention
-> Seq2Seq의 Encoder와 Decoder를 통해 학습을 할 때, 입력 Sequence의 길이가 길어지면 Deocder로 전달하는 Hidden & Cell state에서 병목현상이 일어날 수 밖에 없다. 또한 Gradient가 첫번째 Layer까지 도달하기 어려운 문제 (Long Term Dependency)를 해결하고 입력으로 주어진 정보들과의 유사도를 계산해서 필요한 정보를 얻기위해 Attention 구조를 사용
- - Encoder & Decoder with LSTM + Attention Layer
- - Use all hidden states in Encoder for caculate simialarity with Deocder's each hidden state (Dot Attention, Concat Attention)
- - Solve Long Term Dependency problem -> More shoter way for gradient to get in encoder
- - Neural Machine Translation
- - Teacher Forcing
-![Seq2Seq with Attention](../docs/seq2seqwithAttention.png)
+#### Non Max Suppression
+> Clean up bounding boxes -> 하나의 대상에 대해서도 multiple bbox를 예측할 수 있기 때문에 겹치는 bbox를 NMS를 통해 삭제한다.
+ - (Perhpas start with discarding all bounding boxes < probability threshold[0.2]) -> 하지만 mAP의 기준에서는 많이 있는게 오히려 더 좋다.
+ - 먼저 Probability(Confidence) Score가 가장 높은 BBox를 기준으로 삼는다.
+ - 그리고 Class가 같은 다른 BBox와 IoU를 계산해서, 일정 기준을 넘어가면 해당 BBox를 제외한다
+ - 이후에 다음 Probability Score가 높은 BBox를 기준으로 다시 같은 과정을 반복한다.
+ - 마지막으로 모든 Class에 대해서 위의 과정을 반복한다.
+
+![Non Max Suppresion](../docs/NMS.png)
 
