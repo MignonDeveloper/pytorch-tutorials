@@ -28,3 +28,17 @@
 
 ![Non Max Suppresion](../docs/NMS.png)
 
+#### Mean Average Precision
+
+> Clean up bounding boxes -> 하나의 대상에 대해서도 multiple bbox를 예측할 수 있기 때문에 겹치는 bbox를 NMS를 통해 삭제한다.
+
+1. Get all bounding box predictions on our test set
+2. Ground Truth와 IoU를 계산하여, Threshold를 기준으로 prediction box가 True Positive인지 False Positive인지 체크
+3. Sort by descending confidence score
+4. Calculate Precision & Recall one by one in order of sorted boxes
+
+![mAP](../docs/mAP.png)
+
+5. Calculate Area under PR Curve
+6. Calculate for all classes then get mean value of all classes AP
+7. mAP@0.5:0.05:0.95 -> 0.5, 0.55, 0.6, ..., 0.95를 threshold로 둬서 mAP를 계산한 다음 모든 mAP를 다시 평균을 낸다는 의미
