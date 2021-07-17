@@ -26,7 +26,7 @@ def non_max_suppression(
     assert type(bboxes) == list
 
     bboxes = [box for box in bboxes if box[1] > prob_threshold] # 최소 prob를 넘어가는 box만 최종 output을 위해서 사용
-    bboxes = sorted(bboxes, key=lambda x: x[1], reverse=True) # prob_score를 기준으로 모든 box들을 오름차순으로 정렬한다.
+    bboxes = sorted(bboxes, key=lambda x: x[1], reverse=True) # prob_score를 기준으로 모든 box들을 내림차순으로 정렬한다.
     bboxes_after_nms = []
 
     while bboxes:
