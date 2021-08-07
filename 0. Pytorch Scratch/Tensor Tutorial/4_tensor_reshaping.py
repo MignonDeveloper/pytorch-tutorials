@@ -5,10 +5,10 @@ import torch
 # ============================================================== #
 
 
-# (1) View & Reshape
+# (1) View & Reshape -> copy가 일어나지 않고 원래 객체에 pointer로 연결
 x = torch.arange(9)
 x_3x3 = x.view(3, 3)  # act on contiguous tensors = stored contiguously in memory
-x_3x3 = x.reshape(3, 3)  # not matter -> if not contiguous, make copy of tensor
+x_3x3_1 = x.reshape(3, 3)  # not matter -> if not contiguous, make copy of tensor
 
 y = x_3x3.t()  # transpose matrix -> [0, 3, 6, 1, 4, 7, 2, 5, 8]
 print(y.contiguous().view(9))  # get error without .contiguous()

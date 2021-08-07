@@ -1,4 +1,5 @@
 import torch
+import numpy as np
 
 # ============================================================== #
 #               Tensor Math & Comparison Operations              #
@@ -12,13 +13,14 @@ y = torch.tensor([9, 8, 7])
 # (1) Addition (with various ways)
 z1 = torch.empty(3)
 torch.add(x, y, out=z1)
-
 z2 = torch.add(x, y)
-
 z = x + y  # favorite way
 
 
 # (2) Subtraction
+z1 = torch.empty(3)
+torch.subtract(x, y, out=z1)
+z2 = torch.subtract(x, y)
 z = x - y
 
 
@@ -47,6 +49,7 @@ x1 = torch.rand((2, 5))
 x2 = torch.rand((5, 3))
 x3 = torch.mm(x1, x2) # 2 x 3
 x3 = x1.mm(x2)
+x4 = x1 @ x2
 
 
 # (8) Matrix Exponentiation (not element-wise exponentiation)
@@ -60,6 +63,7 @@ z = x * y
 
 # (10) dot product
 z = torch.dot(x, y)
+z = x @ y
 
 
 # (11) Batch Matrix Multiplication (batch 단위로 마지막 2개의 matrix에 대한 행렬곱 연산)
@@ -88,9 +92,13 @@ abs_x = torch.abs(x)
 z = torch.argmax(x, dim=0)
 z = torch.argmin(x, dim=0)
 mean_x = torch.mean(x.float(), dim=0)  # torch needs float tensors for mean
+std_x = torch.std(x.float(), dim=0)  # torch needs float tensors for std & var
 z = torch.eq(x, y)  # which elements is equal and return boolean values
 sorted_y, indices = torch.sort(y, dim=0, descending=False)
 z = torch.clamp(x, min=0, max=10)  # check all elements with speicified value and clamp it to the min & max value
+
+pi_tensor = torch.tensor([0, np.pi/2, np.pi])
+sin = torch.sin(pi_tensor)
 
 x = torch.tensor([1, 0, 1, 1, 1], dtype=torch.bool)
 z = torch.any(x)  # return true if any value is true
