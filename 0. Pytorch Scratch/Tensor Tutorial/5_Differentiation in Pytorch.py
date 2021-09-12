@@ -11,11 +11,11 @@ print('grad:', x.grad)
 print("is_leaf:", x.is_leaf)
 print("requires_grad:", x.requires_grad)
 
-print('data:',y.data)
-print('grad_fn:',y.grad_fn)
-print('grad:',y.grad)
-print("is_leaf:",y.is_leaf)
-print("requires_grad:",y.requires_grad)
+print('data:', y.data)
+print('grad_fn:', y.grad_fn)
+print('grad:', y.grad)
+print("is_leaf:", y.is_leaf)
+print("requires_grad:", y.requires_grad)
 
 ###########################################
 
