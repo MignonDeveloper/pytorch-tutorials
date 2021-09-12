@@ -1,2 +1,4 @@
 dataset
 runs
+logs
+__pycache__
