@@ -1,3 +1,13 @@
+"""
+Architecture guidelines for stable Deep Convolutional GANs
+    1. Replace any pooling layers with strided convolutions (discriminator) and fractional-strided convolutions (generator)
+    2. Use Batch Normalization in both the generator and the discriminator
+    3. Remove fully connected hidden layers for deeper architecutres.
+    4. Use ReLU activation in generator for all layers except for the output, which uses Tanh
+    5. Use LeakyReLU activation in the discriminator for all layers.
+"""
+
+
 import torch
 import torch.nn as nn
 
@@ -7,9 +17,11 @@ class Discriminator(nn.Module):
         self.disc = nn.Sequential( # Input: (N, channels_img, 64, 64)
             nn.Conv2d(channels_img, features_d, kernel_size=4, stride=2, padding=1), # 32 * 32
             nn.LeakyReLU(0.2, inplace=True),
+
             self._block(features_d, features_d * 2, kernel_size=4, stride=2, padding=1), # 16 * 16
             self._block(features_d * 2, features_d * 4, kernel_size=4, stride=2, padding=1), # 8 * 8
             self._block(features_d * 4, features_d * 8, kernel_size=4, stride=2, padding=1), # 4 * 4
+
             nn.Conv2d(features_d * 8, 1, kernel_size=4, stride=2, padding=0), # 1 * 1
             nn.Sigmoid()
         )
@@ -22,7 +34,7 @@ class Discriminator(nn.Module):
                 kernel_size,
                 stride,
                 padding,
-                bias=False
+                bias=False,  # using batch normalization
             ),
             nn.BatchNorm2d(out_channels),
             nn.LeakyReLU(0.2, inplace=True),
@@ -46,13 +58,13 @@ class Generator(nn.Module):
 
     def _block(self, in_channels, out_channels, kernel_size, stride, padding):
         return nn.Sequential(
-            nn.ConvTranspose2d(
+            nn.ConvTranspose2d(  # transpose 2d를 이용해서 upsampling
                 in_channels,
                 out_channels,
                 kernel_size,
                 stride,
                 padding,
-                bias=False,
+                bias=False,  # using batch normalization
             ),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(inplace=True)
@@ -64,7 +76,7 @@ class Generator(nn.Module):
 def initialize_weights(model):
     for m in model.modules():
         if isinstance(m, (nn.Conv2d, nn.ConvTranspose2d, nn.BatchNorm2d)):
-            nn.init.normal_(m.weight.data, 0.0, 0.02)
+            nn.init.normal_(m.weight.data, mean=0.0, std=0.02)
 
 def test():
     N, in_channels, H, W = 8, 3, 64, 64

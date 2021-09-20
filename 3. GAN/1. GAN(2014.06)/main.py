@@ -79,12 +79,12 @@ for epoch in range(num_epochs):
 
         lossD = (lossD_real + lossD_fake)
         disc.zero_grad()
-        lossD.backward(retain_graph=True)  ## 왜냐하면 discriminator를 학습할 때 만든 fake image의 forward path에 대한 computation graph를 유지하기 위해서
-        opt_disc.step()
+        lossD.backward(retain_graph=True)  # 왜냐하면 discriminator를 학습할 때 만든 fake image의 forward path에 대한 computation graph를 유지하기 위해서
+        opt_disc.step()  # 딱 discriminator 부분만 update를 진행
 
 
         ### Train Generator: minimize -> log(1 - D(G(z)))  // better to maximize log(D(G(z))) 
-        output = disc(fake).view(-1)
+        output = disc(fake).view(-1)  # 굳이 gen부터 할필요 없음 -> retain_graph를 했기 때문에
         lossG = criterion(output, torch.ones_like(output))
         gen.zero_grad()
         lossG.backward()

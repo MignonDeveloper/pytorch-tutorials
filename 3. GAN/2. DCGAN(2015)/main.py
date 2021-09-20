@@ -61,15 +61,17 @@ disc.train()
 for epoch in range(NUM_EPOCHS):
     # Target labels not needed! <3 unsupervised
     for batch_idx, (real, _) in enumerate(dataloader):
-        real = real.to(device)
         noise = torch.randn(BATCH_SIZE, Z_DIM, 1, 1).to(device)
+        real = real.to(device)
         fake = gen(noise)
 
         ### Train Discriminator: max log(D(x)) + log(1 - D(G(z)))
         disc_real = disc(real).reshape(-1)
         loss_disc_real = criterion(disc_real, torch.ones_like(disc_real))
+
         disc_fake = disc(fake.detach()).reshape(-1)
         loss_disc_fake = criterion(disc_fake, torch.zeros_like(disc_fake))
+
         loss_disc = (loss_disc_real + loss_disc_fake) / 2
 
         disc.zero_grad()

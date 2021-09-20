@@ -3,3 +3,5 @@ runs
 logs
 __pycache__
 model
+pretrained
+images
